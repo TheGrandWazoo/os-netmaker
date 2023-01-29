@@ -1,0 +1,290 @@
+<model>
+    <mount>//OPNsense/Netmaker</mount>
+    <version>0.0.1</version>
+    <description>
+        OPNsense Netmaker Server
+    </description>
+    <items>
+        <!-- container -->
+        <general>
+            <!-- fields -->
+            <enabled type="BooleanField">
+                <default>0</default>
+                <Required>Y</Required>
+            </enabled>
+            <control type="OptionField">
+                <Required>N</Required>
+                <Default>now</Default>
+                <OptionValues>
+                    <now>Now</now>
+                    <graceful>Graceful</graceful>
+                    <convenient>Convenient</convenient>
+                </OptionValues>
+            </control>
+            <graceful type="BooleanField">
+                <default>0</default>
+                <Required>N</Required>
+            </graceful>
+            <convenient type="BooleanField">
+                <default>0</default>
+                <Required>N</Required>
+            </convenient>
+            <showIntro type="BooleanField">
+                <default>1</default>
+                <Required>N</Required>
+            </showIntro>
+        </general>
+        <databases>
+            <database type="ArrayField">
+                <enabled type="BooleanField">
+                    <Default>1</Default>
+                    <Required>Y</Required>
+                </enabled>
+                <name type="TextField">
+                    <Required>Y</Required>
+                    <Mask>/^([0-9a-zA-Z_-]){1,255}$/u</Mask>
+                    <ValidationMessage>Should be an alphanumeric string including _ and - with length between 1 and 255 characters.</ValidationMessage>
+                </name>
+                <description type="TextField">
+                    <Required>N</Required>
+                    <Mask>/^.{1,255}$/u</Mask>
+                    <ValidationMessage>Description is a string between 1 and 255 characters.</ValidationMessage>
+                </description>
+                <bindAddress type=".\IPAddressBindingField"></bindAddress>
+                <bindPort type="PortField">
+                    <Required>N</Required>
+                </bindPort>
+                <dbType type="OptionField">
+                    <Required>Y</Required>
+                    <Default>sqlite</Default>
+                    <OptionValues>
+                        <udp>sqlite - SQLite database (Local)</udp>
+                        <tcp>rqlite - Lightweight, distrubuted relational database</tcp>
+                        <tls>postgres - PostgreSQL database</tls>
+                    </OptionValues>
+                </dbType>
+                <localNetwork type="NetworkField">
+                    <Required>N</Required>
+                    <NetMaskRequired>N</NetMaskRequired>
+                </localNetwork>
+                <externalMediaAddress type=".\IPAddressBindingField">
+                    <Required>N</Required>
+                    <NetMaskRequired>N</NetMaskRequired>
+                </externalMediaAddress>
+                <externalSignalingAddress type=".\IPAddressBindingField">
+                    <Required>N</Required>
+                    <NetMaskRequired>N</NetMaskRequired>
+                </externalSignalingAddress>
+                <externalSignalingPort type="PortField">
+                    <Required>N</Required>
+                </externalSignalingPort>
+                <additionalOptions type="TextField">
+                    <Required>N</Required>
+                </additionalOptions>
+            </database>
+        </databases>
+        <networks>
+			<network type="ArrayField">
+				<enabled type="BooleanField">
+					<Default>1</Default>
+					<Required>Y</Required>
+				</enabled>
+				<name type="TextField">
+					<Required>Y</Required>
+					<Mask>/^([a-zA-Z-]){1,12}$/u</Mask>
+					<ChangeCase>lower</ChangeCase>
+					<ValidationMessage>Should be an lowercase string including - with length between 1 and 12 characters.</ValidationMessage>
+				</name>
+				<description type="TextField">
+					<Required>N</Required>
+					<Mask>/^.{1,255}$/u</Mask>
+					<ValidationMessage>Description is a string between 1 and 255 characters.)</ValidationMessage>
+				</description>
+				<ipv4Enabled type="BooleanField">
+					<Required>N</Required>
+				</ipv4Enabled>
+                <ipv4CIDR type="NetworkField">
+                    <Required>N</Required>
+                    <NetMaskRequired>Y</NetMaskRequired>
+                    <ValidationMessage>Input a valid IPv4 Network.</ValidationMessage>
+                </ipv4CIDR>
+                <ipv6Enabled type="BooleanField">
+                    <Required>N</Required>
+                </ipv6Enabled>
+                <ipv6CIDR type="NetworkField">
+                    <Required>N</Required>
+                    <NetMaskRequired>Y</NetMaskRequired>
+                    <ValidationMessage>Input a valid IPv6 Network.</ValidationMessage>
+                </ipv6CIDR>
+                <udpHolePunch type="BooleanField">
+                    <Required>N</Required>
+                </udpHolePunch>
+                <defaultAccess type="BooleanField">
+                    <Required>N</Required>
+                </defaultAccess>
+                <isPointToSite type="BooleanField">
+                    <Required>N</Required>
+                </isPointToSite>
+                <isLocalNetwork type="BooleanField">
+                    <Required>N</Required>
+                </isLocalNetwork>
+			</network>
+		</networks>
+        <servers>
+            <server type="ArrayField">
+                <enabled type="BooleanField">
+                    <Default>1</Default>
+                    <Required>Y</Required>
+                </enabled>
+                <name type="TextField">
+                    <Required>Y</Required>
+                    <Mask>/^([0-9a-zA-Z_-]){1,255}$/u</Mask>
+                    <ValidationMessage>Should be an alphanumeric string including _ and - with length between 1 and 255 characters.</ValidationMessage>
+                </name>
+                <description type="TextField">
+                    <Required>N</Required>
+                    <Mask>/^.{1,255}$/u</Mask>
+                    <ValidationMessage>Description is a string between 1 and 255 characters.</ValidationMessage>
+                </description>
+                <baseDomain type="HostnameField">
+                    <Required>N</Required>
+                    <Constraints>
+                        <check001>
+                            <ValidationMessage>A domain must be set.</ValidationMessage>
+                            <type>DependConstraint</type>
+                            <addFields>
+                                <field1>enabled</field1>
+                            </addFields>
+                        </check001>
+                    </Constraints>
+                </baseDomain>
+                <extApiPort type="PortField">
+                    <Required>N</Required>
+                    <Constraints>
+                        <check001>
+                            <ValidationMessage>A port must be set.</ValidationMessage>
+                            <type>DependConstraint</type>
+                            <addFields>
+                                <field1>enabled</field1>
+                            </addFields>
+                        </check001>
+                    </Constraints>
+                    <Default>443</Default>
+                </extApiPort>
+                <intApiPort type="PortField">
+                    <Required>N</Required>
+                    <Constraints>
+                        <check001>
+                            <ValidationMessage>A port must be set.</ValidationMessage>
+                            <type>DependConstraint</type>
+                            <addFields>
+                                <field1>enabled</field1>
+                            </addFields>
+                        </check001>
+                    </Constraints>
+                    <Default>8081</Default>
+                </intApiPort>
+                <mqHost type="NetworkField">
+                    <Required>N</Required>
+                    <Default>127.0.0.1</Default>
+                    <Mask>/^.{1,255}$/u</Mask>
+                    <ValidationMessage>Description is a string between 1 and 255 characters.)</ValidationMessage>
+                </mqHost>
+                <mqPort type="PortField">
+                    <Required>N</Required>
+                    <Default>8883</Default>
+                    <Mask>/^.{1,255}$/u</Mask>
+                    <ValidationMessage>Description is a string between 1 and 255 characters.)</ValidationMessage>
+                </mqPort>
+                <mqAdminPwd type="TextField">
+                    <Required>N</Required>
+                    <Mask>/^.{1,255}$/u</Mask>
+                    <ValidationMessage>Please specify a full SIP URI</ValidationMessage>
+                </mqAdminPwd>
+            </server>
+        </servers>
+        <identities>
+            <identity type="ArrayField">
+                <enabled type="BooleanField">
+                    <Default>1</Default>
+                    <Required>Y</Required>
+                </enabled>
+                <name type="TextField">
+                    <Required>Y</Required>
+                    <Mask>/^([0-9a-zA-Z_-]){1,255}$/u</Mask>
+                    <ValidationMessage>Should be an alphanumeric string including _ and - with length between 1 and 255 characters.</ValidationMessage>
+                </name>
+                <description type="TextField">
+                    <Required>N</Required>
+                    <Mask>/^.{1,255}$/u</Mask>
+                    <ValidationMessage>Description is a string between 1 and 255 characters.)</ValidationMessage>
+                </description>
+                <endpoint type="ModelRelationField">
+                    <Model>
+                        <template>
+                            <source>OPNsense.Netmaker.Netmaker</source>
+                            <items>endpoints.endpoint</items>
+                            <display>name</display>
+                        </template>
+                    </Model>
+                    <ValidationMessage>Endpoint not found</ValidationMessage>
+                    <Multiple>N</Multiple>
+                    <Required>Y</Required>
+                </endpoint>
+                <matchList type="NetworkField">
+                    <FieldSeparator>,</FieldSeparator>
+                    <Required>Y</Required>
+                    <asList>Y</asList>
+                </matchList>
+            </identity>
+        </identities>
+        <authentications>
+            <authentication type="ArrayField">
+            </authentication>
+        </authentications>
+        <registrations>
+            <registration type="ArrayField">
+            </registration>
+        </registrations>
+        <dialplans>
+            <dialplan type="ArrayField">
+                <enabled type="BooleanField">
+                    <Default>1</Default>
+                    <Required>Y</Required>
+                </enabled>
+                <name type="TextField">
+                    <Required>Y</Required>
+                    <Mask>/^([0-9a-zA-Z_-]){1,255}$/u</Mask>
+                    <ValidationMessage>Should be an alphanumeric string including _ and - with length between 1 and 255 characters.</ValidationMessage>
+                </name>
+                <description type="TextField">
+                    <Required>N</Required>
+                    <Mask>/^.{1,255}$/u</Mask>
+                    <ValidationMessage>Description is a string between 1 and 255 characters.</ValidationMessage>
+                </description>
+                <inboundDialPattern type="TextField">
+                     <Required>N</Required>
+                     <Mask>/^.{1,255}$/u</Mask>
+                     <ValidationMessage>Pattern is a string between 1 and 255 characters.</ValidationMessage>
+                </inboundDialPattern>
+                <outboundDialString type="TextField">
+                     <Required>N</Required>
+                     <Mask>/^.{1,255}$/u</Mask>
+                     <ValidationMessage>Pattern is a string between 1 and 255 characters.</ValidationMessage>
+                </outboundDialString>
+                <contacts type="ModelRelationField">
+                    <Model>
+                        <template>
+                            <source>OPNsense.Netmaker.Netmaker</source>
+                            <items>identities.identity</items>
+                            <display>name</display>
+                        </template>
+                    </Model>
+                    <ValidationMessage>Identity not found</ValidationMessage>
+                    <Multiple>Y</Multiple>
+                    <Required>Y</Required>
+                </contacts>
+            </dialplan>
+        </dialplans>
+    </items>
+</model>

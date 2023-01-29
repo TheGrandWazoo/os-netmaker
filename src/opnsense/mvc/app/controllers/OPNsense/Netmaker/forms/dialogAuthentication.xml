@@ -1,0 +1,19 @@
+<form>
+	<field>
+		<id>authentication.enabled</id>
+		<label>Enabled</label>
+		<type>checkbox</type>
+		<help>Enable this authentication</help></field>
+	<field>
+		<id>authentication.name</id>
+		<label>Name</label>
+		<type>text</type>
+		<help>Name of the authentication</help>
+	</field>
+	<field>
+		<id>authentication.description</id>
+		<label>Description</label>
+		<type>text</type>
+		<help>Description of this authentication (Not Parsed)</help>
+	</field>
+</form>

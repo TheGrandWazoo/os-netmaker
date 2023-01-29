@@ -1,0 +1,10 @@
+<acl>
+    <page-services-netmaker>
+        <name>Services: Netmaker</name>
+        <description>Allow access to the Netmaker module</description>
+        <patterns>
+            <pattern>ui/netmaker/*</pattern>
+            <pattern>api/netmaker/*</pattern>
+        </patterns>
+    </page-services-netmaker>
+</acl>

@@ -1,0 +1,2 @@
+netmaker.yaml:/usr/local/etc/netmaker/netmaker.yaml
+rc.conf.d:/etc/rc.conf.d/netmaker

@@ -1,0 +1,36 @@
+<form>
+	<field>
+		<id>identity.enabled</id>
+		<label>Enabled</label>
+		<type>checkbox</type>
+		<help>Enable this Identity</help>
+	</field>
+	<field>
+		<id>identity.name</id>
+		<label>Name</label>
+		<type>text</type>
+		<help>Name of the Identity</help>
+	</field>
+	<field>
+		<id>identity.description</id>
+		<label>Description</label>
+		<type>text</type>
+		<help>Description of this Identity (Not Parsed)</help>
+	</field>
+	<field>
+		<id>identity.endpoint</id>
+		<label>Endpoint</label>
+		<type>dropdown</type>
+		<help>Add an Endpoint to this Identity.</help>
+		<hint>Set the Endpoint for the Identity</hint>
+	</field>
+	<field>
+		<id>identity.matchList</id>
+		<label>Match List</label>
+		<type>select_multiple</type>
+		<style>tokenize</style>
+		<allownew>true</allownew>
+		<help>Add an Endpoint to this Identity.</help>
+		<hint>Set the Endpoint for the Identity.</hint>
+	</field>
+</form>

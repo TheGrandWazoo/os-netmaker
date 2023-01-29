@@ -1,0 +1,16 @@
+server:
+{% if helpers.exists('OPNsense.Netmaker.servers') %}
+{%   for server in helpers.toList('OPNsense.Netmaker.servers.server') %}
+{#   # ignore disabled transports #}
+{%     if server.enabled == '1' %}
+  server: "broker.{{server.baseDomain}}"
+  apiport: "{{server.intApiPort}}"
+  apiconn: "api.{{server.baseDomain}}:{{server.extApiPort}}"
+  masterkey: "Something"
+  mqhost: "{{server.mqHost}}"
+  mqport: "{{server.mqPort}}"
+  mqadminpassword: "{{server.mqAdminPwd}}"
+{%     endif %}
+{%   endfor %}
+{% endif %}
+  manageiptables: "off"

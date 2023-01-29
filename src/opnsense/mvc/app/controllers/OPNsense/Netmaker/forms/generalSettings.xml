@@ -1,0 +1,20 @@
+<form>
+    <field>
+        <id>netmaker.general.enabled</id>
+        <label>Enable Netmaker</label>
+        <type>checkbox</type>
+        <help>Enable or disable the Netmaker service.</help>
+    </field>
+    <field>
+        <id>netmaker.general.control</id>
+        <label>Shutdown/Restart Control</label>
+        <type>dropdown</type>
+        <help><![CDATA[Enable Netmaker graceful stop mode. In this mode Netmaker will continue to process existing connections until they close. Note that this may severely slow down Netmaker's shutdown, depending on the configured timeout values. If graceful stop mode is not enabled, theSBC will use the hard stop mode where it immediately quits and all established connections are closed. Hard stop mode is recommended.]]></help>
+    </field>
+    <field>
+        <id>netmaker.general.showIntro</id>
+        <label>Show introduction pages</label>
+        <type>checkbox</type>
+        <help><![CDATA[Uncheck to hide all additional introduction pages. Requires a manual page reload for the change to take effect.]]></help>
+    </field>
+</form>

@@ -1,0 +1,9 @@
+<menu>
+    <Services>
+        <Netmaker VisibleName="Netmaker" cssClass="fa fa-arrows fa-fw">
+            <Settings order="10" url="/ui/netmaker">
+                <SBCSettings VisibleName="Netmaker Settings" url="/ui/netmaker#subtab_netmaker-settings"/>
+            </Settings>
+        </Netmaker>
+    </Services>
+</menu>

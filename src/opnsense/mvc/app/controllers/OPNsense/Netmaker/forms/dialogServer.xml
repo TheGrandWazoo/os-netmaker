@@ -1,0 +1,56 @@
+<form>
+	<field>
+		<id>server.enabled</id>
+		<label>Enabled</label>
+		<type>checkbox</type>
+		<help>Enable this server.</help>
+	</field>
+	<field>
+		<id>server.name</id>
+		<label>Name</label>
+		<type>text</type>
+		<help>Name of the registration</help>
+	</field>
+	<field>
+		<id>server.description</id>
+		<label>Description</label>
+		<type>text</type>
+		<help>Description of this registration (Not Parsed)</help>
+	</field>
+    <field>
+        <id>server.baseDomain</id>
+        <label>Domain</label>
+        <type>text</type>
+        <help>Domain of this server, e.g. example.com</help>
+    </field>
+    <field>
+        <id>server.extApiPort</id>
+        <label>API External Port</label>
+        <type>text</type>
+        <help>Specify the port for the API to listen on from the Internet.</help>
+    </field>
+    <field>
+        <id>server.intApiPort</id>
+        <label>API Internal Port</label>
+        <type>text</type>
+        <help>Specify the port for the API to listen on Internally.</help>
+    </field>
+    <field>
+        <id>server.mqHost</id>
+        <label>MQ Host</label>
+        <type>text</type>
+        <help>IPv4 address of the MQ Host, e.g. 127.0.0.1 or 192.168.100.100</help>
+    </field>
+    <field>
+        <id>server.mqPort</id>
+        <label>MQ Port</label>
+        <type>text</type>
+        <help>IPv4 Port of the HQ Host, e.g. 8883</help>
+    </field>
+    <field>
+        <id>server.mqAdminPwd</id>
+        <label>MQ Password</label>
+        <type>text</type>
+        <help>Admin Password to the MQ Host</help>
+    </field>
+</form>
