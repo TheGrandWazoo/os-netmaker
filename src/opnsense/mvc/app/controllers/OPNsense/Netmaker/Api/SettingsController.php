@@ -43,43 +43,6 @@ class SettingsController extends ApiMutableModelControllerBase
     protected static $internalModelName = 'netmaker';
     protected static $internalModelClass = '\OPNsense\Netmaker\Netmaker';
     
-    // Transport related API's
-    public function getDatabaseAction($uuid = null)
-    {
-        return $this->getBase('database', 'databases.database', $uuid);
-    }
-
-    public function setDatabaseAction($uuid)
-    {
-        return $this->setBase('database', 'databases.database', $uuid);
-    }
-
-    public function addDatabaseAction()
-    {
-        return $this->addBase('database', 'databases.database');
-    }
-
-    public function delDatabaseAction($uuid)
-    {
-        return $this->delBase('databases.database', $uuid);
-    }
-
-    public function toggleDatabaseAction($uuid)
-    {
-        return $this->toggleBase('databases.database', $uuid);
-    }
-
-    public function searchDatabasesAction()
-    {
-        $filter_funct = function ($record) {
-            if ($record->bindPort == "") {
-                $record->bindPort = "5060 (Default)";
-            }
-            return true;
-        };
-        return $this->searchBase('databases.database', array('enabled', 'name', 'description', 'type', 'bindAddress', 'bindPort'), 'name', $filter_funct);
-    }
-
     // Network Related API's
     public function getNetworkAction($uuid = null)
     {

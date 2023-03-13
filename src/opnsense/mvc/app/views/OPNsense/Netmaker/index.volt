@@ -74,20 +74,7 @@ POSSIBILITY OF SUCH DAMAGE.
          **********************************************************************/
         loadGeneralSettings();
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            if (e.target.id == 'database-tab') {
-                $('#grid-database').bootgrid('destroy'); // always destroy previous grid, so data is always fresh
-                $("#grid-database").UIBootgrid({
-                    search:'/api/netmaker/settings/searchDatabase',
-                    get:'/api/netmaker/settings/getDatabase/',
-                    set:'/api/netmaker/settings/setDatabase/',
-                    add:'/api/netmaker/settings/addDatabase/',
-                    del:'/api/netmaker/settings/delDatabase/',
-                    toggle:'/api/netmaker/settings/toggleDatabase/',
-                    options: {
-                        rowCount:[10,25,50,100,500,1000]
-                    }
-                });
-            } else if (e.target.id == 'servers-tab') {
+            if (e.target.id == 'servers-tab') {
                 $('#grid-servers').bootgrid('destroy'); // always destroy previous grid, so data is always fresh
                 $("#grid-servers").UIBootgrid({
                     search:'/api/netmaker/settings/searchServers',
@@ -256,22 +243,6 @@ POSSIBILITY OF SUCH DAMAGE.
     </li>
     <!-- tab page "Settings" -->
 
-    <!-- tab page "Databases" -->
-    <li{% if showIntro|default('0')=='1' %} role="presentation" class="dropdown">
-        <a data-toggle="dropdown" href="#" class="dropdown-toggle pull-right visible-lg-inline-block visible-md-inline-block visible-xs-inline-block visible-sm-inline-block" role="button">
-            <b><span class="caret"></span></b>
-        </a>
-        <a data-toggle="tab" onclick="$('#database-introduction').click();" class="visible-lg-inline-block visible-md-inline-block visible-xs-inline-block visible-sm-inline-block" style="border-right:0px;"><b>{{ lang._('Database') }}</b></a>
-        <ul class="dropdown-menu" role="menu">
-            <li><a data-toggle="tab" id="database-introduction" href="#subtab_netmaker-database-introduction">{{ lang._('Introduction') }}</a></li>
-            <li><a data-toggle="tab" id="database-tab" href="#database">{{ lang._('Databases') }}</a></li>
-        </ul>
-        {% else %}
-        ><a data-toggle="tab" id="database-tab" href="#database">{{ lang._('Databases') }}</a>
-        {% endif %}
-    </li>
-    <!-- tab page "Databases" -->
-
     <!-- tab page "Servers" -->
     <li{% if showIntro|default('0')=='1' %} role="presentation" class="dropdown">
         <a data-toggle="dropdown" href="#" class="dropdown-toggle pull-right visible-lg-inline-block visible-md-inline-block visible-xs-inline-block visible-sm-inline-block" role="button">
@@ -287,24 +258,6 @@ POSSIBILITY OF SUCH DAMAGE.
         {% endif %}
     </li>
     <!-- tab page "Servers" -->
-
-    <!-- tab page "Networks" -->
-    <li{% if showIntro|default('0')=='1' %} role="presentation" class="dropdown">
-        <a data-toggle="dropdown" href="#" class="dropdown-toggle pull-right visible-lg-inline-block visible-md-inline-block visible-xs-inline-block visible-sm-inline-block" role="button">
-            <b><span class="caret"></span></b>
-        </a>
-        <a data-toggle="tab" onclick="$('#networks-introduction').click();" class="visible-lg-inline-block visible-md-inline-block visible-xs-inline-block visible-sm-inline-block" style="border-right:0px;"><b>{{ lang._('Networks') }}</b></a>
-        <ul class="dropdown-menu" role="menu">
-            <li><a data-toggle="tab" id="networks-introduction" href="#subtab_netmaker-networks-introduction">{{ lang._('Introduction') }}</a></li>
-            <li><a data-toggle="tab" id="networks-tab" href="#networks">{{ lang._('Networks') }}</a></li>
-        </ul>
-        {% else %}
-        ><a data-toggle="tab" id="networks-tab" href="#networks">{{ lang._('Networks') }}</a>
-        {% endif %}
-    </li>
-    <!-- tab page "Networks" -->
-
-    {# add automatically generated tabs #}
 </ul>
 
 <div class="content-box tab-content">
@@ -313,33 +266,16 @@ POSSIBILITY OF SUCH DAMAGE.
             <h1>{{ lang._('Quick Start Guide') }}</h1>
             <p>{{ lang._('Welcome to the Netmaker Server plugin! This plugin is designed to offer features and flexibility of an SBC using the Asterisk framework package.')}}</p>
             <p>{{ lang._('Note that you should configure the SBC plugin in the following order:') }}</p>
-            <ul>
-              <li>{{ lang._('Add %sDatabase:%s Database connectivity.') | format('<b>', '</b>') }}</li>
-              }
-            </ul>
             <p>{{ lang._('Please be aware that you need to %smanually%s add the required firewall rules for all configured services.') | format('<b>', '</b>') }}</p>
             <br/>
         </div>
     </div>
-
     <div id="subtab_netmaker-settings-introduction" class="tab-pane fade">
         <div class="col-md-12">
             <h1>{{ lang._('Settings') }}</h1>
             <p>{{ lang._('The netmaker needs to know what protocol (TCP or UDP) and bind address an endpoint will communicate.') }}</p>
             <ul>
               <li>{{ lang._('%sFQDN or IP:%s The IP address or fully-qualified domain name that should be used when communicating with your server.') | format('<b>', '</b>') }}</li>
-              <li>{{ lang._('%sPort:%s The TCP or UDP port that should be used. If unset, the same port the client connected to will be used.') | format('<b>', '</b>') }}</li>
-            </ul>
-            <br/>
-        </div>
-    </div>
-
-    <div id="subtab_netmaker-databases-introduction" class="tab-pane fade">
-        <div class="col-md-12">
-            <h1>{{ lang._('Databases') }}</h1>
-            <p>{{ lang._('Netmaker uses a database to keep information for the network. It is defaulted to use SQLite.') }}</p>
-            <ul>
-              <li>{{ lang._('%sDatabase:%s sqlite.') | format('<b>', '</b>') }}</li>
               <li>{{ lang._('%sPort:%s The TCP or UDP port that should be used. If unset, the same port the client connected to will be used.') | format('<b>', '</b>') }}</li>
             </ul>
             <br/>
@@ -354,87 +290,6 @@ POSSIBILITY OF SUCH DAMAGE.
             <br/>
         </div>
     </div>
-    <div id="database" class="tab-pane fade">
-        <!-- tab page "database" -->
-        <table id="grid-database" class="table table-condensed table-hover table-striped table-responsive" data-editDialog="DialogDatabase">
-            <thead>
-                <tr>
-                    <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
-                    <th data-column-id="name" data-type="string" data-visible="true">{{ lang._('Name') }}</th>
-                    <th data-column-id="description" data-type="string">{{ lang._('Description') }}</th>
-                    <th data-column-id="type" data-type="string" data-visible="true">{{ lang._('Type') }}</th>
-                    <th data-column-id="bindAddress" data-type="string" data-identifier="true" data-visible="true">{{ lang._('IP Address') }}</th>
-                    <th data-column-id="bindPort" data-type="string" data-identifier="true" data-visible="true">{{ lang._('Port') }}</th>
-                    <th data-column-id="uuid" data-type="string" data-identifier="true" data-visible="false">{{ lang._('ID') }}</th>
-                    <th data-column-id="commands" data-width="7em" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td></td>
-                    <td>
-                        <button data-action="add" type="button" class="btn btn-xs btn-default"><span class="fa fa-plus"></span></button>
-                        <button data-action="deleteSelected" type="button" class="btn btn-xs btn-default"><span class="fa fa-trash-o"></span></button>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-        <!-- apply button "database"-->
-        {{ partial("layout_partials/base_dialog",['fields':formDialogDatabase,'id':'DialogDatabase','label':lang._('Edit Database')])}}
-        <div class="col-md-12">
-            <hr/>
-            <button class="btn btn-primary" id="reconfigureAct" type="button">
-                <b>{{ lang._('Apply') }}</b>
-                <i id="reconfigureAct_progress" class=""></i>
-            </button>
-            <!-- button class="btn btn-primary" id="configtestAct-database" type="button"><b>{{ lang._('Test syntax') }}</b><i id="configtestAct_progress" class=""></i></button -->
-            <br/>
-            <br/>
-        </div>
-    </div>
-
-    <!-- tab page "networks" -->
-    <div id="networks" class="tab-pane fade">
-        <table id="grid-networks" class="table table-condensed table-hover table-striped table-responsive" data-editDialog="DialogNetwork">
-            <thead>
-                <tr>
-                    <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
-                    <th data-column-id="name" data-type="string" data-visible="true">{{ lang._('Name') }}</th>
-                    <th data-column-id="description" data-type="string">{{ lang._('Description') }}</th>
-                    <th data-column-id="ipv4CIDR" data-type="string" data-identifier="true" data-visible="true">{{ lang._('IPv4 CIDR') }}</th>
-                    <th data-column-id="ipv6CIDR" data-type="string" data-identifier="true" data-visible="true">{{ lang._('IPv6 CIDR') }}</th>
-                    <th data-column-id="uuid" data-type="string" data-identifier="true" data-visible="false">{{ lang._('ID') }}</th>
-                    <th data-column-id="commands" data-width="7em" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td></td>
-                    <td>
-                        <button data-action="add" type="button" class="btn btn-xs btn-default"><span class="fa fa-plus"></span></button>
-                        <button data-action="deleteSelected" type="button" class="btn btn-xs btn-default"><span class="fa fa-trash-o"></span></button>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-        <!--  apply button "networks" -->
-        {{ partial("layout_partials/base_dialog",['fields':formDialogNetwork,'id':'DialogNetwork','label':lang._('Edit Network')])}}
-        <div class="col-md-12">
-            <hr/>
-            <button class="btn btn-primary" id="reconfigureAct" type="button">
-                <b>{{ lang._('Apply') }}</b>
-                <i id="reconfigureAct_progress" class=""></i>
-            </button>
-            <!-- button class="btn btn-primary" id="configtestAct-networks" type="button"><b>{{ lang._('Test syntax') }}</b><i id="configtestAct_progress" class=""></i></button -->
-            <br/>
-            <br/>
-        </div>
-    </div>
-
     <!-- tab page "servers" -->
     <div id="servers" class="tab-pane fade">
         <table id="grid-servers" class="table table-condensed table-hover table-striped table-responsive" data-editDialog="DialogServer">

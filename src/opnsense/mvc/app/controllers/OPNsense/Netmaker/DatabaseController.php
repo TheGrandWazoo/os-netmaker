@@ -28,32 +28,25 @@
  */
 namespace OPNsense\Netmaker;
 
-use \OPNsense\Netmaker\Netmaker;
+use OPNsense\Base\IndexController;
 
 /**
- * Class SettingsController Handles settings related API actions for the Netmaker module
+ * Class DatabaseController handles datanbase settings related API actions for 
+ * the Netmaker module.
  * @package OPNsense\Netmaker
  */
-/**
- * Class IndexController
- * @package OPNsense\HAProxy
- */
-class IndexController extends \OPNsense\Base\IndexController
+class DatabaseController extends IndexController
 {
     /**
-     * haproxy index page
+     * database index page
      * @throws \Exception
      */
     public function indexAction()
     {
-        // include form definitions
-        $this->view->formGeneralSettings = $this->getForm("generalSettings");
-        $this->view->formDialogNetwork = $this->getForm("dialogNetworks");
-        $this->view->formDialogServer = $this->getForm("dialogServers");
-        // set additional view parameters
+        $this->view->databaseForm = $this->getForm('database');
+        // Set showIntro from General Settings
         $mdlNetmaker = new \OPNsense\Netmaker\Netmaker();
         $this->view->showIntro = (string)$mdlNetmaker->general->showIntro;
-        // pick the template to serve
-        $this->view->pick('OPNsense/Netmaker/index');
+        $this->view->pick('OPNsense/Netmaker/database');
     }
 }

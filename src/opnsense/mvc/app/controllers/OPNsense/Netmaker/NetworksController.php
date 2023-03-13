@@ -38,7 +38,7 @@ use \OPNsense\Netmaker\Netmaker;
  * Class IndexController
  * @package OPNsense\HAProxy
  */
-class IndexController extends \OPNsense\Base\IndexController
+class NetworksController extends \OPNsense\Base\IndexController
 {
     /**
      * haproxy index page
@@ -46,14 +46,12 @@ class IndexController extends \OPNsense\Base\IndexController
      */
     public function indexAction()
     {
-        // include form definitions
-        $this->view->formGeneralSettings = $this->getForm("generalSettings");
-        $this->view->formDialogNetwork = $this->getForm("dialogNetworks");
-        $this->view->formDialogServer = $this->getForm("dialogServers");
-        // set additional view parameters
+        // Include the Form definitions
+        $this->view->formDialogNetwork = $this->getForm('dialogNetwork');
+        // Set showIntro from General Settings
         $mdlNetmaker = new \OPNsense\Netmaker\Netmaker();
         $this->view->showIntro = (string)$mdlNetmaker->general->showIntro;
-        // pick the template to serve
-        $this->view->pick('OPNsense/Netmaker/index');
+        // Choose the template
+        $this->view->pick('OPNsense/Netmaker/networks');
     }
 }

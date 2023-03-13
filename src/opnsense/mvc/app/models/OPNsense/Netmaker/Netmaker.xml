@@ -1,6 +1,6 @@
 <model>
     <mount>//OPNsense/Netmaker</mount>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <description>
         OPNsense Netmaker Server
     </description>
@@ -34,75 +34,63 @@
                 <Required>N</Required>
             </showIntro>
         </general>
-        <databases>
-            <database type="ArrayField">
+        <database>
+            <enabled type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </enabled>
+            <name type="TextField">
+                <Required>Y</Required>
+                <Mask>/^([0-9a-zA-Z_-]){1,255}$/u</Mask>
+                <ValidationMessage>Should be an alphanumeric string including _ and - with length between 1 and 255 characters.</ValidationMessage>
+            </name>
+            <description type="TextField">
+                <Required>N</Required>
+                <Mask>/^.{1,255}$/u</Mask>
+                <ValidationMessage>Description is a string between 1 and 255 characters.</ValidationMessage>
+            </description>
+            <dbType type="OptionField">
+                <Required>Y</Required>
+                <Default>sqlite</Default>
+                <Multiple>N</Multiple>
+                <OptionValues>
+                    <sqlite>sqlite - SQLite database (Local)</sqlite>
+                    <rqlite>rqlite - Lightweight, distrubuted relational database</rqlite>
+                    <postgres>postgres - PostgreSQL database</postgres>
+                </OptionValues>
+            </dbType>
+            <bindAddress type=".\IPAddressBindingField">
+                <Required>N</Required>
+            </bindAddress>
+            <ipv4DatabaseAddress type="NetworkField">
+                <Required>N</Required>
+                <NetMaskRequired>Y</NetMaskRequired>
+                <ValidationMessage>Input a valid IPv4 Network.</ValidationMessage>
+            </ipv4DatabaseAddress>
+            <databasePort type="PortField">
+                <Required>N</Required>
+            </databasePort>
+        </database>
+        <networks>
+            <network type="ArrayField">
                 <enabled type="BooleanField">
                     <Default>1</Default>
                     <Required>Y</Required>
                 </enabled>
                 <name type="TextField">
                     <Required>Y</Required>
-                    <Mask>/^([0-9a-zA-Z_-]){1,255}$/u</Mask>
-                    <ValidationMessage>Should be an alphanumeric string including _ and - with length between 1 and 255 characters.</ValidationMessage>
+                    <Mask>/^([a-zA-Z-]){1,12}$/u</Mask>
+                    <ChangeCase>lower</ChangeCase>
+                    <ValidationMessage>Should be an lowercase string including - with length between 1 and 12 characters.</ValidationMessage>
                 </name>
                 <description type="TextField">
                     <Required>N</Required>
                     <Mask>/^.{1,255}$/u</Mask>
-                    <ValidationMessage>Description is a string between 1 and 255 characters.</ValidationMessage>
+                    <ValidationMessage>Description is a string between 1 and 255 characters.)</ValidationMessage>
                 </description>
-                <bindAddress type=".\IPAddressBindingField"></bindAddress>
-                <bindPort type="PortField">
+                <ipv4Enabled type="BooleanField">
                     <Required>N</Required>
-                </bindPort>
-                <dbType type="OptionField">
-                    <Required>Y</Required>
-                    <Default>sqlite</Default>
-                    <OptionValues>
-                        <udp>sqlite - SQLite database (Local)</udp>
-                        <tcp>rqlite - Lightweight, distrubuted relational database</tcp>
-                        <tls>postgres - PostgreSQL database</tls>
-                    </OptionValues>
-                </dbType>
-                <localNetwork type="NetworkField">
-                    <Required>N</Required>
-                    <NetMaskRequired>N</NetMaskRequired>
-                </localNetwork>
-                <externalMediaAddress type=".\IPAddressBindingField">
-                    <Required>N</Required>
-                    <NetMaskRequired>N</NetMaskRequired>
-                </externalMediaAddress>
-                <externalSignalingAddress type=".\IPAddressBindingField">
-                    <Required>N</Required>
-                    <NetMaskRequired>N</NetMaskRequired>
-                </externalSignalingAddress>
-                <externalSignalingPort type="PortField">
-                    <Required>N</Required>
-                </externalSignalingPort>
-                <additionalOptions type="TextField">
-                    <Required>N</Required>
-                </additionalOptions>
-            </database>
-        </databases>
-        <networks>
-			<network type="ArrayField">
-				<enabled type="BooleanField">
-					<Default>1</Default>
-					<Required>Y</Required>
-				</enabled>
-				<name type="TextField">
-					<Required>Y</Required>
-					<Mask>/^([a-zA-Z-]){1,12}$/u</Mask>
-					<ChangeCase>lower</ChangeCase>
-					<ValidationMessage>Should be an lowercase string including - with length between 1 and 12 characters.</ValidationMessage>
-				</name>
-				<description type="TextField">
-					<Required>N</Required>
-					<Mask>/^.{1,255}$/u</Mask>
-					<ValidationMessage>Description is a string between 1 and 255 characters.)</ValidationMessage>
-				</description>
-				<ipv4Enabled type="BooleanField">
-					<Required>N</Required>
-				</ipv4Enabled>
+                </ipv4Enabled>
                 <ipv4CIDR type="NetworkField">
                     <Required>N</Required>
                     <NetMaskRequired>Y</NetMaskRequired>
@@ -128,8 +116,8 @@
                 <isLocalNetwork type="BooleanField">
                     <Required>N</Required>
                 </isLocalNetwork>
-			</network>
-		</networks>
+            </network>
+        </networks>
         <servers>
             <server type="ArrayField">
                 <enabled type="BooleanField">
@@ -238,53 +226,5 @@
                 </matchList>
             </identity>
         </identities>
-        <authentications>
-            <authentication type="ArrayField">
-            </authentication>
-        </authentications>
-        <registrations>
-            <registration type="ArrayField">
-            </registration>
-        </registrations>
-        <dialplans>
-            <dialplan type="ArrayField">
-                <enabled type="BooleanField">
-                    <Default>1</Default>
-                    <Required>Y</Required>
-                </enabled>
-                <name type="TextField">
-                    <Required>Y</Required>
-                    <Mask>/^([0-9a-zA-Z_-]){1,255}$/u</Mask>
-                    <ValidationMessage>Should be an alphanumeric string including _ and - with length between 1 and 255 characters.</ValidationMessage>
-                </name>
-                <description type="TextField">
-                    <Required>N</Required>
-                    <Mask>/^.{1,255}$/u</Mask>
-                    <ValidationMessage>Description is a string between 1 and 255 characters.</ValidationMessage>
-                </description>
-                <inboundDialPattern type="TextField">
-                     <Required>N</Required>
-                     <Mask>/^.{1,255}$/u</Mask>
-                     <ValidationMessage>Pattern is a string between 1 and 255 characters.</ValidationMessage>
-                </inboundDialPattern>
-                <outboundDialString type="TextField">
-                     <Required>N</Required>
-                     <Mask>/^.{1,255}$/u</Mask>
-                     <ValidationMessage>Pattern is a string between 1 and 255 characters.</ValidationMessage>
-                </outboundDialString>
-                <contacts type="ModelRelationField">
-                    <Model>
-                        <template>
-                            <source>OPNsense.Netmaker.Netmaker</source>
-                            <items>identities.identity</items>
-                            <display>name</display>
-                        </template>
-                    </Model>
-                    <ValidationMessage>Identity not found</ValidationMessage>
-                    <Multiple>Y</Multiple>
-                    <Required>Y</Required>
-                </contacts>
-            </dialplan>
-        </dialplans>
     </items>
 </model>

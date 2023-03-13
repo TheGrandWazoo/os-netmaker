@@ -1,16 +1,16 @@
 <form>
-	<field>
-		<id>network.enabled</id>
-		<label>Enabled</label>
-		<type>checkbox</type>
-		<help>Enable this Network</help>
-	</field>
-	<field>
-		<id>network.name</id>
-		<label>Name</label>
-		<type>text</type>
-		<help>Name of the of the network (Max 12 lowercase and dash characters)</help>
-	</field>
+    <field>
+        <id>network.enabled</id>
+        <label>Enabled</label>
+        <type>checkbox</type>
+        <help>Enable this Network</help>
+    </field>
+    <field>
+        <id>network.name</id>
+        <label>Name</label>
+        <type>text</type>
+        <help>Name of the of the network (Max 12 lowercase and dash characters)</help>
+    </field>
     <field>
         <id>network.description</id>
         <label>Description</label>
