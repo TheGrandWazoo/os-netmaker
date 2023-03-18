@@ -316,7 +316,7 @@
     {% if showIntro|default('0')=='1' %}
     <li class="active"><a data-toggle="tab" id="servers-introduction" href="#subtab_servers-introduction"><b>{{ lang._('Introduction') }}</b></a></li>
     {% endif %}
-    <li {% if showIntro|default('0')=='0' %}class="active"{% endif %}><a data-toggle="tab" id="servers-tab" href="#subtab_servers"><b>{{ lang._('servers') }}</b></a></li>
+    <li {% if showIntro|default('0')=='0' %}class="active"{% endif %}><a data-toggle="tab" id="servers-tab" href="#subtab_servers"><b>{{ lang._('Servers') }}</b></a></li>
 </ul>
 
 <div class="content-box tab-content">
@@ -334,7 +334,7 @@
     </div>
     {% endif %}
 
-    <!-- tab page "servers" -->
+    <!-- tab page "Servers" Start -->
     <div id="subtab_servers" class="tab-pane fade {% if showIntro|default('0')=='0' %}in active{% endif %}">
         <table id="grid-servers" class="table table-condensed table-hover table-striped table-responsive" data-editDialog="DialogServer">
             <thead>
@@ -371,6 +371,7 @@
             <br/>
         </div>
     </div>
+    <!-- tab page "Servers" End -->
 </div>
 {# Include dialogs #}
 {{ partial("layout_partials/base_dialog",['fields':formDialogServer,'id':'DialogServer','label':lang._('Edit Server')])}}

@@ -73,35 +73,6 @@ POSSIBILITY OF SUCH DAMAGE.
          * link grid actions
          **********************************************************************/
         loadGeneralSettings();
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            if (e.target.id == 'servers-tab') {
-                $('#grid-servers').bootgrid('destroy'); // always destroy previous grid, so data is always fresh
-                $("#grid-servers").UIBootgrid({
-                    search:'/api/netmaker/settings/searchServers',
-                    get:'/api/netmaker/settings/getServer/',
-                    set:'/api/netmaker/settings/setServer/',
-                    add:'/api/netmaker/settings/addServer/',
-                    del:'/api/netmaker/settings/delServer/',
-                    toggle:'/api/netmaker/settings/toggleServer/',
-                    options: {
-                        rowCount:[10,25,50,100,500,1000]
-                    }
-                });
-            } else if (e.target.id == 'networks-tab') {
-                $('#grid-networks').bootgrid('destroy'); // always destroy previous grid, so data is always fresh
-                $("#grid-networks").UIBootgrid({
-                    search:'/api/netmaker/settings/searchNetworks',
-                    get:'/api/netmaker/settings/getNetwork/',
-                    set:'/api/netmaker/settings/setNetwork/',
-                    add:'/api/netmaker/settings/addNetwork/',
-                    del:'/api/netmaker/settings/delNetwork/',
-                    toggle:'/api/netmaker/settings/toggleNetwork/',
-                    options: {
-                        rowCount:[10,25,50,100,500,1000]
-                    }
-                });
-            }
-        });
 
         /***********************************************************************
          * Commands
@@ -242,22 +213,6 @@ POSSIBILITY OF SUCH DAMAGE.
         {% endif %}
     </li>
     <!-- tab page "Settings" -->
-
-    <!-- tab page "Servers" -->
-    <li{% if showIntro|default('0')=='1' %} role="presentation" class="dropdown">
-        <a data-toggle="dropdown" href="#" class="dropdown-toggle pull-right visible-lg-inline-block visible-md-inline-block visible-xs-inline-block visible-sm-inline-block" role="button">
-            <b><span class="caret"></span></b>
-        </a>
-        <a data-toggle="tab" onclick="$('#servers-introduction').click();" class="visible-lg-inline-block visible-md-inline-block visible-xs-inline-block visible-sm-inline-block" style="border-right:0px;"><b>{{ lang._('Servers') }}</b></a>
-        <ul class="dropdown-menu" role="menu">
-            <li><a data-toggle="tab" id="servers-introduction" href="#subtab_netmaker-servers-introduction">{{ lang._('Introduction') }}</a></li>
-            <li><a data-toggle="tab" id="servers-tab" href="#servers">{{ lang._('Servers') }}</a></li>
-        </ul>
-        {% else %}
-        ><a data-toggle="tab" id="servers-tab" href="#servers">{{ lang._('Servers') }}</a>
-        {% endif %}
-    </li>
-    <!-- tab page "Servers" -->
 </ul>
 
 <div class="content-box tab-content">
@@ -286,44 +241,6 @@ POSSIBILITY OF SUCH DAMAGE.
         <div class="col-md-12">
             <hr/>
             <button class="btn btn-primary" id="reconfigureAct" type="button"><b>{{ lang._('Apply') }}</b> <i id="reconfigureAct_progress" class=""></i></button>
-            <br/>
-            <br/>
-        </div>
-    </div>
-    <!-- tab page "servers" -->
-    <div id="servers" class="tab-pane fade">
-        <table id="grid-servers" class="table table-condensed table-hover table-striped table-responsive" data-editDialog="DialogServer">
-            <thead>
-                <tr>
-                    <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
-                    <th data-column-id="name" data-type="string" data-visible="true">{{ lang._('Name') }}</th>
-                    <th data-column-id="description" data-type="string">{{ lang._('Description') }}</th>
-                    <th data-column-id="baseDomain" data-type="string" data-identifier="true" data-visible="true">{{ lang._('Base Domain') }}</th>
-                    <th data-column-id="uuid" data-type="string" data-identifier="true" data-visible="false">{{ lang._('ID') }}</th>
-                    <th data-column-id="commands" data-width="7em" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td></td>
-                    <td>
-                        <button data-action="add" type="button" class="btn btn-xs btn-default"><span class="fa fa-plus"></span></button>
-                        <button data-action="deleteSelected" type="button" class="btn btn-xs btn-default"><span class="fa fa-trash-o"></span></button>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-        {{ partial("layout_partials/base_dialog",['fields':formDialogServer,'id':'DialogServer','label':lang._('Edit Server')])}}
-        <!--  apply button "servers" -->
-        <div class="col-md-12">
-            <hr/>
-            <button class="btn btn-primary" id="reconfigureAct" type="button">
-                <b>{{ lang._('Apply') }}</b>
-                <i id="reconfigureAct_progress" class=""></i>
-            </button>
-            <!-- button class="btn btn-primary" id="configtestAct-servers" type="button"><b>{{ lang._('Test syntax') }}</b><i id="configtestAct_progress" class=""></i></button -->
             <br/>
             <br/>
         </div>
