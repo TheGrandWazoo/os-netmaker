@@ -3,8 +3,8 @@
         <Netmaker VisibleName="Netmaker" cssClass="fa fa-arrows fa-fw">
             <General order="10" url="/ui/netmaker"/>
             <Database order="20" url="/ui/netmaker/database"/>
-            <Networks order="30" url="/ui/netmaker/networks"/>
-            <Servers order="40" url="/ui/netmaker/servers"/>
+            <Servers order="30" url="/ui/netmaker/servers"/>
+            <Networks order="40" url="/ui/netmaker/networks"/>
             <Connections order="50" url="/ui/netmaker/connections"/>
         </Netmaker>
     </Services>
