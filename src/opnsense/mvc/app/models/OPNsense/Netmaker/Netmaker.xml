@@ -146,6 +146,18 @@
                         </check001>
                     </Constraints>
                 </baseDomain>
+                <apiServerToken type="TextField">
+                    <Required>Y</Required>
+                    <Constraints>
+                        <check001>
+                            <ValidationMessage>A server Token must be set.</ValidationMessage>
+                            <type>DependConstraint</type>
+                            <addFields>
+                                <field1>enabled</field1>
+                            </addFields>
+                        </check001>
+                    </Constraints>
+                </apiServerToken>
                 <extApiPort type="PortField">
                     <Required>N</Required>
                     <Constraints>
@@ -172,22 +184,42 @@
                     </Constraints>
                     <Default>8081</Default>
                 </intApiPort>
-                <mqHost type="NetworkField">
-                    <Required>N</Required>
+                <mqHostExt type=".\IPAddressBindingField">
+                    <Required>Y</Required>
                     <Default>127.0.0.1</Default>
                     <Mask>/^.{1,255}$/u</Mask>
+                    <AllowDynamic>Y</AllowDynamic>
+                    <Filters>
+                        <ipaddr>/^((?!dhcp).)*$/</ipaddr>
+                    </Filters>
                     <ValidationMessage>Description is a string between 1 and 255 characters.)</ValidationMessage>
-                </mqHost>
-                <mqPort type="PortField">
-                    <Required>N</Required>
+                </mqHostExt>
+                <mqPortExt type="PortField">
+                    <Required>Y</Required>
                     <Default>8883</Default>
                     <Mask>/^.{1,255}$/u</Mask>
+                    <ValidationMessage>Value TCP/UDP port number.)</ValidationMessage>
+                </mqPortExt>
+                <mqHostInt type=".\IPAddressBindingField">
+                    <Required>Y</Required>
+                    <Default>0.0.0.0</Default>
+                    <Mask>/^.{1,255}$/u</Mask>
+                    <AllowDynamic>Y</AllowDynamic>
+                    <Filters>
+                        <ipaddr>/^((?!dhcp).)*$/</ipaddr>
+                    </Filters>
                     <ValidationMessage>Description is a string between 1 and 255 characters.)</ValidationMessage>
-                </mqPort>
+                </mqHostInt>
+                <mqPortInt type="PortField">
+                    <Required>Y</Required>
+                    <Default>1883</Default>
+                    <Mask>/^.{1,255}$/u</Mask>
+                    <ValidationMessage>Value TCP/UDP port number.)</ValidationMessage>
+                </mqPortInt>
                 <mqAdminPwd type="TextField">
                     <Required>N</Required>
                     <Mask>/^.{1,255}$/u</Mask>
-                    <ValidationMessage>Please specify a full SIP URI</ValidationMessage>
+                    <ValidationMessage>MQTT Password</ValidationMessage>
                 </mqAdminPwd>
             </server>
         </servers>
