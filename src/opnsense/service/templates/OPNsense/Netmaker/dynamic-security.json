@@ -1,0 +1,230 @@
+{
+ "clients": [
+  {
+   "username": "Netmaker-Admin",
+   "textName": "netmaker admin user",
+   "password": "80a6UseuPXmzSjwi1ostJodLFIBbvzDFXh5VpAXV77FjLqHe///ytxolji+Gd+/3ucp+k/SKT76dYPsluE6qzQ==",
+   "salt": "NVJCeEllWklPOHJM",
+   "iterations": 101,
+   "roles": [
+    {
+     "rolename": "admin"
+    }
+   ]
+  },
+  {
+   "username": "Netmaker-Server",
+   "textName": "netmaker server user",
+   "password": "2EUJ6kbyXVvx/WzJnhdJglyue9NlASHa9Zd06HfLzSaxYt8dNHN7P7eYO7KpjDHu4/AfBhH515rBdfumuK2Ygg==",
+   "salt": "cXZXbVdUTmhLdEd5",
+   "iterations": 101,
+   "roles": [
+    {
+     "rolename": "server"
+    }
+   ]
+  },
+  {
+   "username": "Netmaker-Exporter",
+   "textName": "netmaker metrics exporter",
+   "password": "",
+   "salt": "",
+   "iterations": 101,
+   "roles": [
+    {
+     "rolename": "exporter"
+    }
+   ]
+  }
+ ],
+ "roles": [
+  {
+   "rolename": "admin",
+   "acls": [
+    {
+     "acltype": "publishClientSend",
+     "topic": "$CONTROL/dynamic-security/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientReceive",
+     "topic": "$CONTROL/dynamic-security/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "subscribePattern",
+     "topic": "$CONTROL/dynamic-security/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientReceive",
+     "topic": "$SYS/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "subscribePattern",
+     "topic": "$SYS/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientReceive",
+     "topic": "#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "subscribePattern",
+     "topic": "#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "unsubscribePattern",
+     "topic": "#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientSend",
+     "topic": "#",
+     "priority": -1,
+     "allow": true
+    }
+   ]
+  },
+  {
+   "rolename": "server",
+   "acls": [
+    {
+     "acltype": "publishClientSend",
+     "topic": "peers/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientSend",
+     "topic": "update/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientSend",
+     "topic": "metrics_exporter",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientReceive",
+     "topic": "ping/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientReceive",
+     "topic": "update/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientReceive",
+     "topic": "signal/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientReceive",
+     "topic": "metrics/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "subscribePattern",
+     "topic": "#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "unsubscribePattern",
+     "topic": "#",
+     "priority": -1,
+     "allow": true
+    }
+   ]
+  },
+  {
+   "rolename": "node",
+   "acls": [
+    {
+     "acltype": "publishClientSend",
+     "topic": "signal/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientSend",
+     "topic": "update/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientSend",
+     "topic": "ping/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "publishClientSend",
+     "topic": "metrics/#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "subscribePattern",
+     "topic": "#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "unsubscribePattern",
+     "topic": "#",
+     "priority": -1,
+     "allow": true
+    }
+   ]
+  },
+  {
+   "rolename": "exporter",
+   "acls": [
+    {
+     "acltype": "publishClientReceive",
+     "topic": "metrics_exporter",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "subscribePattern",
+     "topic": "#",
+     "priority": -1,
+     "allow": true
+    },
+    {
+     "acltype": "unsubscribePattern",
+     "topic": "#",
+     "priority": -1,
+     "allow": true
+    }
+   ]
+  }
+ ],
+ "defaultACLAccess": {
+  "publishClientSend": false,
+  "publishClientReceive": true,
+  "subscribe": false,
+  "unsubscribe": true
+ }
+}
