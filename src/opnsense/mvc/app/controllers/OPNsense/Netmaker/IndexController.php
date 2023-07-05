@@ -48,8 +48,8 @@ class IndexController extends \OPNsense\Base\IndexController
     {
         // include form definitions
         $this->view->formGeneralSettings = $this->getForm("generalSettings");
-        $this->view->formDialogNetwork = $this->getForm("dialogNetworks");
-        $this->view->formDialogServer = $this->getForm("dialogServers");
+        $this->view->formDialogNetwork = $this->getForm("dialogNetwork");
+        $this->view->formDialogServer = $this->getForm("dialogServer");
         // set additional view parameters
         $mdlNetmaker = new \OPNsense\Netmaker\Netmaker();
         $this->view->showIntro = (string)$mdlNetmaker->general->showIntro;

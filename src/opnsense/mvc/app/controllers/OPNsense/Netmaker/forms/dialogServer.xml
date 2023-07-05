@@ -49,7 +49,7 @@
     </field>
     <field>
         <id>server.mqPortExt</id>
-        <label>Internal MQ Port</label>
+        <label>External MQ Port</label>
         <type>text</type>
         <help>IPv4 Port of the HQ Host, e.g. 8883</help>
     </field>
