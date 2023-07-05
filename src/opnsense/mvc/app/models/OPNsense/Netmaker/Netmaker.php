@@ -33,23 +33,6 @@ use OPNsense\Base\BaseModel;
 class Netmaker extends BaseModel
 {
     /**
-     * create a new Database
-     * @param string $name
-     * @param string $description
-     * @return string
-     */
-    public function newDatabase($name, $description = "", $type = "sqlite", $bindaddr = "0.0.0.0")
-    {
-        $database = $this->databases->database->Add();
-        $uuid = $database->getAttributes()['uuid'];
-        $database->name = $name;
-        $database->description = $description;
-        $database->type = $type;
-        $database->bindaddr = $bindaddr;
-        return $uuid;
-    }
-    
-    /**
      * create a new action
      * @param string $name
      * @param string $description

@@ -24,6 +24,12 @@
         <help>Domain of this server, e.g. example.com</help>
     </field>
     <field>
+        <id>server.apiServerToken</id>
+        <label>API Token</label>
+        <type>text</type>
+        <help>Specifiy a password token used for API calls.</help>
+    </field>
+    <field>
         <id>server.extApiPort</id>
         <label>API External Port</label>
         <type>text</type>
@@ -36,14 +42,26 @@
         <help>Specify the port for the API to listen on Internally.</help>
     </field>
     <field>
-        <id>server.mqHost</id>
-        <label>MQ Host</label>
+        <id>server.mqHostExt</id>
+        <label>External MQ Bind Address</label>
+        <type>dropdown</type>
+        <help>IPv4 address of the MQ Host, e.g. 0.0.0.0 or 1.2.3.4</help>
+    </field>
+    <field>
+        <id>server.mqPortExt</id>
+        <label>Internal MQ Port</label>
         <type>text</type>
+        <help>IPv4 Port of the HQ Host, e.g. 8883</help>
+    </field>
+    <field>
+        <id>server.mqHostInt</id>
+        <label>Internal MQ Bind Address</label>
+        <type>dropdown</type>
         <help>IPv4 address of the MQ Host, e.g. 127.0.0.1 or 192.168.100.100</help>
     </field>
     <field>
-        <id>server.mqPort</id>
-        <label>MQ Port</label>
+        <id>server.mqPortInt</id>
+        <label>Internal MQ Port</label>
         <type>text</type>
         <help>IPv4 Port of the HQ Host, e.g. 8883</help>
     </field>

@@ -1,0 +1,49 @@
+<form>
+    <field>
+        <id>netmaker.database.enabled</id>
+        <label>Enabled</label>
+        <type>checkbox</type>
+        <help><![CDATA[Enable this database.]]></help>
+    </field>
+    <field>
+        <id>netmaker.database.name</id>
+        <label>Name</label>
+        <type>text</type>
+        <help><![CDATA[Name of the database.]]></help>
+    </field>
+    <field>
+        <id>netmaker.database.description</id>
+        <label>Description</label>
+        <type>text</type>
+        <help><![CDATA[Description of this database (Not Parsed)]]></help>
+    </field>
+    <field>
+        <id>netmaker.database.dbType</id>
+        <label>Type</label>
+        <type>dropdown</type>
+        <style>databasetype_parent</style>
+        <help><![CDATA[Set the backend database type (Default: sqlite)]]></help>
+    </field>
+    <field>
+        <id>netmaker.database.bindAddress</id>
+        <label>Network Address Bind</label>
+        <type>dropdown</type>
+        <style>databasetype_child</style>
+        <help><![CDATA[Select interface(s) to use. When enabling, only use physical interfaces here (no vlans etc).]]></help>
+    </field>
+    <field>
+        <id>netmaker.database.ipv4DatabaseAddress</id>
+        <label>Database Server Address</label>
+        <type>text</type>
+        <style>databasetype_child</style>
+        <help><![CDATA[Provide an IP address of the database server.]]></help>
+    </field>
+    <field>
+        <id>netmaker.database.databasePort</id>
+        <label>Database Server Port</label>
+        <type>text</type>
+        <style>databasetype_child</style>
+        <help><![CDATA[Provide a TCP/UDP port number of the database server.]]></help>
+        <advanced>true</advanced>
+    </field>
+</form>

@@ -39,6 +39,8 @@ use OPNsense\Firewall\Util;
 use OPNsense\Core\Config;
 //use OPNsense\Base\Validators\CsvListValidator;
 
+require_once 'interfaces.inc';
+
 /**
  * Class InterfaceField field type to select usable interfaces, currently this is kind of a backward compatibility
  * package to glue legacy interfaces into the model.
@@ -50,42 +52,47 @@ class IPAddressBindingField extends BaseField
      * @var bool marks if this is a data node or a container
      */
     protected $internalIsContainer = false;
-
+    
     /**
      * @var string default validation message string
      */
     protected $internalValidationMessage = "please specify a valid ip address";
-
+    
+    /**
+     * @var bool field may contain multiple interfaces at once
+     */
+    protected $internalIsRequired = true;
+    
     /**
      * @var array collected options
      */
     private static $internalOptionList = array();
-
+    
     /**
      * @var array filters to use on the interface list
      */
     private $internalFilters = array();
-
+    
     /**
      * @var string key to use for option selections, to prevent excessive reloading
      */
     private $internalCacheKey = '*';
-
+    
     /**
      * @var bool field may contain multiple interfaces at once
      */
     private $internalMultiSelect = false;
-
+    
     /**
      * @var bool add physical interfaces to selection (collected from lagg, vlan)
      */
     private $internalAddParentDevices = false;
-
+    
     /**
      * @var bool allow dynamic interfaces
      */
     private $internalAllowDynamic = false;
-
+    
     /**
      *  collect parents for lagg interfaces
      *  @return array named array containing device and lagg interface
@@ -108,7 +115,7 @@ class IPAddressBindingField extends BaseField
         }
         return $physicalInterfaces;
     }
-
+    
     /**
      *  collect parents for vlan interfaces
      *  @return array named array containing device and vlan interfaces
@@ -127,7 +134,7 @@ class IPAddressBindingField extends BaseField
         }
         return $physicalInterfaces;
     }
-
+    
     /**
      * generate validation data (list of interfaces and well know ports)
      */
@@ -135,7 +142,7 @@ class IPAddressBindingField extends BaseField
     {
         if (!isset(self::$internalOptionList[$this->internalCacheKey])) {
             self::$internalOptionList[$this->internalCacheKey] = array();
-
+            
             $allInterfaces = array();
             $allInterfacesDevices = array(); // mapping device -> interface handle (lan/wan/optX)
             $configObj = Config::getInstance()->object();
@@ -145,15 +152,16 @@ class IPAddressBindingField extends BaseField
                     if (!$this->internalAllowDynamic && !empty($value->internal_dynamic)) {
                         continue;
                     }
-                    if (!empty($value->ipaddr)) {
+                    if (!empty($value->ipaddr) && $value->ipaddr != "dhcp") {
                         $allInterfaces[(string)$value->ipaddr] = $value;
-                    }
-                    if (!empty($value->if)) {
-                        $allInterfacesDevices[(string)$value->if] = $key;
+                    } else {
+                        $interfaces_details = legacy_interfaces_details();
+                        $value->ipaddr = (string)$interfaces_details[(string)$value->if]["ipv4"][0]["ipaddr"];
+                        $allInterfaces[(string)$value->ipaddr] = $value;
                     }
                 }
             }
-
+            
             /*
              * Iterate through the VIP interfaces
              */
@@ -163,12 +171,12 @@ class IPAddressBindingField extends BaseField
                     $allInterfaces[(string)$value->subnet] = $value;
                 }
             }
-
+            
             if ($this->internalAddParentDevices) {
                 // collect parents for lagg/vlan interfaces
                 $physicalInterfaces = $this->getConfigLaggInterfaces();
                 $physicalInterfaces = array_merge($physicalInterfaces, $this->getConfigVLANInterfaces());
-
+                
                 // add unique devices
                 foreach ($physicalInterfaces as $interface => $devices) {
                     // construct interface node
@@ -191,7 +199,7 @@ class IPAddressBindingField extends BaseField
                     }
                 }
             }
-
+            
             // collect this items options
             foreach ($allInterfaces as $key => $value) {
                 // use filters to determine relevance
@@ -203,7 +211,7 @@ class IPAddressBindingField extends BaseField
                         // not found, might be a boolean.
                         $fieldData = "0";
                     }
-
+                    
                     if (!preg_match($filterData, $fieldData)) {
                         $isMatched = false;
                     }
@@ -221,7 +229,7 @@ class IPAddressBindingField extends BaseField
             natcasesort(self::$internalOptionList[$this->internalCacheKey]);
         }
     }
-
+    
     /**
      * set filters to use (in regex) per field, all tags are combined
      * and cached for the next object using the same filters
@@ -234,7 +242,7 @@ class IPAddressBindingField extends BaseField
             $this->internalCacheKey = md5(serialize($this->internalFilters));
         }
     }
-
+    
     /**
      * add parent devices to the selection in case the parent has no configuration
      * @param $value boolean value 0/1
@@ -247,7 +255,7 @@ class IPAddressBindingField extends BaseField
             $this->internalAddParentDevices = false;
         }
     }
-
+    
     /**
      * select if multiple interfaces may be selected at once
      * @param $value boolean value 0/1
@@ -260,7 +268,7 @@ class IPAddressBindingField extends BaseField
             $this->internalMultiSelect = false;
         }
     }
-
+    
     /**
      * select if dynamic (hotplug) interfaces maybe selectable
      * @param $value boolean value 0/1
@@ -273,7 +281,7 @@ class IPAddressBindingField extends BaseField
             $this->internalAllowDynamic = false;
         }
     }
-
+    
     /**
      * get valid options, descriptions and selected value
      * @return array
@@ -281,14 +289,9 @@ class IPAddressBindingField extends BaseField
     public function getNodeData()
     {
         $result = array();
-        // if interface is not required and single, add empty option
-        if (!$this->internalIsRequired && !$this->internalMultiSelect) {
-            $result[""] = array("value" => gettext("none"), "selected" => 0);
-        }
-
         // Add the 0.0.0.0 (All) network interfaces option.
         $result["0.0.0.0"] = array("value" => gettext("0.0.0.0 (All)"), "selected" => 0);
-
+        
         // explode interfaces
         $interfaces = explode(',', $this->internalValue);
         foreach (self::$internalOptionList[$this->internalCacheKey] as $optKey => $optValue) {
@@ -301,7 +304,7 @@ class IPAddressBindingField extends BaseField
         }
         return $result;
     }
-
+    
     /**
      * Validate network options
      * @param array $network to validate
@@ -312,14 +315,14 @@ class IPAddressBindingField extends BaseField
     {
         $messages = array();
         if (!Util::isAlias($network) && !Util::isIpAddress($network) && !Util::isSubnet($network)) {
-                $messages[] = sprintf(
-                    gettext('Entry "%s" is not a valid IP address.'),
-                    $network
+            $messages[] = sprintf(
+                gettext('Entry "%s" is not a valid IP address.'),
+                $network
                 );
         }
         return $messages;
     }
-
+    
     /**
      * retrieve field validators for this field type
      * @return array returns validators

@@ -43,7 +43,13 @@ class ServiceController extends ApiMutableServiceControllerBase
     protected static $internalServiceEnabled = 'general.enabled';
     protected static $internalServiceName = 'netmaker';
     protected static $internalServiceTemplate = 'OPNsense/Netmaker';
-    
+
+
+    public function databaseAction()
+    {
+        return array('status' => 'Ok');
+    }
+
     public function reconfigureAction()
     {
         $status = "failed";

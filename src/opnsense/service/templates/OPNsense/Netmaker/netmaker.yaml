@@ -6,11 +6,12 @@ server:
   server: "broker.{{server.baseDomain}}"
   apiport: "{{server.intApiPort}}"
   apiconn: "api.{{server.baseDomain}}:{{server.extApiPort}}"
-  masterkey: "Something"
-  mqhost: "{{server.mqHost}}"
-  mqport: "{{server.mqPort}}"
+  masterkey: "{{server.apiServerToken}}"
+  mqhost: "{{server.mqHostInt}}"
+  mqport: "{{server.mqPortInt}}"
   mqadminpassword: "{{server.mqAdminPwd}}"
 {%     endif %}
 {%   endfor %}
 {% endif %}
   manageiptables: "off"
+  messagequeuebackend: "off"
